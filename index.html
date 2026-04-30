@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เว็บตัดรูปแบบตาราง + ลบพื้นหลัง + View</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>เว็บช่วยตัดรูปแบบตาราง</h1>
+    <p>อัปโหลดรูป -> ลากกรอบ -> กำหนดแถว/คอลัมน์ -> ดูดสีพื้นหลัง -> ตัด -> View รูปใหญ่ -> ดาวน์โหลด</p>
+
+    <div class="panel">
+      <div class="workspace">
+        <aside class="tool-panel">
+          <div class="toolbar">
+            <fieldset class="tool-group">
+              <legend>ไฟล์</legend>
+              <div class="tool-grid single">
+                <label class="control-field">
+                  รูปภาพ
+                  <input id="fileInput" type="file" accept="image/*" />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="tool-group">
+              <legend>กรอบตัด</legend>
+              <div class="tool-grid">
+                <label class="control-field">
+                  อัตราส่วน
+                  <select id="ratioSelect">
+                    <option value="free">กรอบอิสระ</option>
+                    <option value="1:1">1:1</option>
+                    <option value="4:5">4:5</option>
+                    <option value="16:9">16:9</option>
+                    <option value="3:4">3:4</option>
+                  </select>
+                </label>
+
+                <label class="control-field wide">
+                  ขนาดเส้น
+                  <span class="range-row">
+                    <input id="lineWidthInput" type="range" min="0.5" max="10" step="0.5" value="2" />
+                    <span id="lineWidthText" class="value-pill">2</span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="tool-group">
+              <legend>ตาราง</legend>
+              <div class="tool-grid">
+                <label class="control-field">
+                  คอลัมน์
+                  <input id="colsInput" type="number" min="1" max="20" value="4" />
+                </label>
+
+                <label class="control-field">
+                  แถว
+                  <input id="rowsInput" type="number" min="1" max="20" value="4" />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="tool-group">
+              <legend>ลบพื้นหลัง</legend>
+              <div class="tool-grid single">
+                <div class="background-controls">
+                  <label class="inline-control">
+                    <input id="removeBgChk" type="checkbox" />
+                    ลบพื้นหลัง
+                  </label>
+                  <div id="colorPreview" class="color-preview" title="สีที่เลือก"></div>
+                </div>
+
+                <button id="pickColorBtn" class="secondary" disabled>ดูดสีเพื่อลบ</button>
+
+                <label class="control-field">
+                  ความใกล้เคียง
+                  <span class="range-row">
+                    <input id="toleranceInput" type="range" min="5" max="160" value="45" />
+                    <span id="toleranceText" class="value-pill">45</span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="tool-group">
+              <legend>คำสั่ง</legend>
+              <div class="action-group">
+                <button id="cropBtn" class="primary-action" disabled>ตัดตามตาราง</button>
+                <button id="resetBtn" class="secondary" disabled>ล้างกรอบ</button>
+              </div>
+            </fieldset>
+          </div>
+        </aside>
+
+        <main class="work-area">
+          <div class="stage-header">
+            <div class="stage-title">พื้นที่ตัดรูป</div>
+            <div class="info" id="info"></div>
+          </div>
+
+          <div class="canvas-wrap">
+            <div class="hint" id="hint">เลือกรูปภาพก่อน</div>
+            <canvas id="canvas"></canvas>
+          </div>
+
+          <div class="preview" id="previewBox">
+            <div class="preview-header">
+              <p>ตัวอย่างรูปที่ตัดแล้ว</p>
+              <button id="downloadAllBtn" disabled>ดาวน์โหลดทั้งหมด</button>
+            </div>
+            <div class="preview-grid" id="previewGrid"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-top">
+        <span id="modalTitle">Preview</span>
+        <button id="closeModalBtn" class="close-btn">ปิด</button>
+      </div>
+      <img id="modalImg" alt="preview" />
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
